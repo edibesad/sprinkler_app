@@ -1,0 +1,17 @@
+{
+    "id": "1",
+    "dirt_temp": 50.00,
+    "dirt_humidity": 100.00,
+    "air_humidity": 36.73,
+    "air_temp": 17.47,
+    "work": 0,
+    "configurated_work": 0,
+    "min_dirt_humidity": 0,
+    "max_dirt_humidity": 0,
+    "min_air_humidity": 0,
+    "max_air_humidity": 0,
+    "min_dirt_temp": 0,
+    "max_dirt_temp": 0,
+    "min_air_temp": 0,
+    "max_air_temp": 0
+}
