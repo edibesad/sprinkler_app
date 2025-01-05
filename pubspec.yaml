@@ -14,6 +14,7 @@ dependencies:
   google_fonts: ^6.2.1
   json_annotation: ^4.9.0
   odometer: ^3.0.0
+  shared_preferences: ^2.3.5
   syncfusion_flutter_gauges: ^28.1.37
 
 dev_dependencies:

@@ -15,6 +15,10 @@ class HomeView extends StatelessWidget {
         model.init();
       },
       onPageBuild: (context, viewModel) => Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: viewModel.toSettings,
+          child: const Icon(Icons.settings),
+        ),
         body: Center(child: Obx(() {
           return viewModel.isLoading.value
               ? const CircularProgressIndicator()

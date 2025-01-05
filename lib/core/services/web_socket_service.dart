@@ -18,8 +18,7 @@ class WebSocketService {
 
   Stream<String> get getMessages => _messageController.stream;
 
-  Future<void> connectToSocket(String host, int port,
-      {dynamic sourceAddress}) async {
+  Future<void> connectToSocket(String host) async {
     try {
       _socket = await WebSocket.connect(
         host,
@@ -34,7 +33,6 @@ class WebSocketService {
   }
 
   void _onMessage(dynamic message) {
-    print(message.runtimeType);
     if (message is Uint8List) {
       _messageController.add(String.fromCharCodes(message));
     } else if (message is String) {

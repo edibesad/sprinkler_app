@@ -34,9 +34,12 @@ class DevicesListElement extends StatelessWidget {
                   child: CarouselSlider(
                     disableGesture: true,
                     items: [
-                      ThermometerWidget(
-                          text: "Sıcaklık (°C)",
-                          currentTemperature: data.airTemp!.toDouble()),
+                      Hero(
+                        tag: 1,
+                        child: ThermometerWidget(
+                            text: "Sıcaklık (°C)",
+                            currentTemperature: data.airTemp!.toDouble()),
+                      ),
                       ThermometerWidget(
                           text: "Toprak Sıcaklığı (°C)",
                           currentTemperature: data.dirtTemp!.toDouble()),
