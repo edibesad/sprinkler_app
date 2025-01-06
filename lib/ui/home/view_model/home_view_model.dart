@@ -23,17 +23,13 @@ class HomeViewModel extends BaseViewModel {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   void setContext(BuildContext context) {
     viewModelContext = context;
   }
 
   Future<void> connectToSocket() async {
     try {
+      isLoading(true);
       await WebSocketService.instance.connectToSocket(
           appViewModel.host, appViewModel.port,
           sourceAddress: "ws");
@@ -43,6 +39,8 @@ class HomeViewModel extends BaseViewModel {
       if (kDebugMode) {
         printError(info: "Hata Kodu: CTS Hata: $e");
       }
+    } finally {
+      isLoading(false);
     }
   }
 
