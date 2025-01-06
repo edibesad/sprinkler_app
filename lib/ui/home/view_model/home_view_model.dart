@@ -42,6 +42,12 @@ class HomeViewModel extends BaseViewModel {
       await WebSocketService.instance.connectToSocket(appViewModel.host!);
       subscribeToMessages();
       error.value = null;
+    } on FormatException catch (e) {
+      error.value = "Bağlantı Adresi Hatalı";
+      Get.snackbar("Hata", "Bağlantı Adresi Hatalı");
+      if (kDebugMode) {
+        printError(info: "Hata Kodu: CTS Hata: $e");
+      }
     } catch (e) {
       error.value = e.toString();
       if (kDebugMode) {

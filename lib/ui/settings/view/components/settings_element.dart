@@ -25,24 +25,43 @@ class SettingsElement extends StatefulWidget {
 
 class _SettingsElementState extends State<SettingsElement>
     with SingleTickerProviderStateMixin {
-  bool flipped = false;
+  late String subtitle;
+  bool _flipped = false;
+  bool _isChanged = false;
   late final AnimationController _controller = AnimationController(
     duration: const Duration(milliseconds: 500),
     vsync: this,
   );
+
+  final double animatationValue = 1;
+
+  void _animateForward() {
+    _controller.forward(from: 0);
+  }
+
+  void _animateReverse() {
+    _controller.reverse(from: animatationValue);
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       builder: (context, _) {
-        if (_controller.value == 0.5) {
-          flipped = !flipped;
+        if (!_isChanged &&
+            _controller.value >= 0.4 &&
+            _controller.value <= 0.5) {
+          _flipped = !_flipped;
+          _isChanged = true;
+        }
+        if (_controller.value == 0.0 || _controller.value == 1.0) {
+          _isChanged = false;
         }
 
         return Transform(
           alignment: Alignment.center,
           transform:
-              Matrix4.rotationX(_controller.value * pi * (flipped ? 1 : -1)),
-          child: flipped
+              Matrix4.rotationX(_controller.value * pi * (_flipped ? 1 : -1)),
+          child: _flipped
               ? Transform.flip(
                   flipY: true,
                   child: ListTile(
@@ -58,19 +77,19 @@ class _SettingsElementState extends State<SettingsElement>
                           IconButton(
                               onPressed: () {
                                 widget.onSave?.call();
-                                _controller.reverse(from: 1.0);
+                                _animateReverse();
                               },
                               icon: const Icon(Icons.done)),
                         IconButton(
                             onPressed: () {
                               widget.onCancel?.call();
-                              _controller.reverse(from: 1.0);
+                              _animateReverse();
                             },
                             icon: const Icon(Icons.close))
                       ],
                     ),
                     onTap: () {
-                      _controller.reverse(from: 1.0);
+                      _animateReverse();
                     },
                   ),
                 )
@@ -83,7 +102,7 @@ class _SettingsElementState extends State<SettingsElement>
                   subtitle: widget.subtitle,
                   trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    _controller.forward(from: 0.0);
+                    _animateForward();
                   },
                 ),
         );

@@ -8,14 +8,15 @@ import 'package:sprinkler_app/ui/home/view_model/home_view_model.dart';
 import '../../../core/base/model/base_view_model.dart';
 
 class SettingsViewModel extends BaseViewModel {
-  TextEditingController serverAddressController = TextEditingController();
+  Rx<TextEditingController> serverAddressController =
+      Rx<TextEditingController>(TextEditingController());
 
   RxBool isLocal = false.obs;
 
   @override
   void init() {
     if (appViewModel.host != null) {
-      serverAddressController.text = appViewModel.host!;
+      serverAddressController.value.text = appViewModel.host!;
     }
     isLocal(appViewModel.isLocal);
   }
@@ -23,7 +24,7 @@ class SettingsViewModel extends BaseViewModel {
   @override
   void dispose() {
     super.dispose();
-    serverAddressController.dispose();
+    serverAddressController.value.dispose();
   }
 
   @override
@@ -45,9 +46,29 @@ class SettingsViewModel extends BaseViewModel {
       return;
     }
 
+    if (serverAddressController.value.text.isEmpty) {
+      Get.showSnackbar(const GetSnackBar(
+        message: "Sunucu adresi boş olamaz",
+        duration: Duration(seconds: 2),
+      ));
+      return;
+    }
+
+    if (!serverAddressController.value.text.startsWith("ws://") &&
+        !serverAddressController.value.text.startsWith("wss://")) {
+      Get.showSnackbar(const GetSnackBar(
+        message: "Geçerli bir sunucu adresi giriniz",
+        duration: Duration(seconds: 2),
+      ));
+      return;
+    }
+
     SharedPreferencesService.instance
-        .setStringValue("host", serverAddressController.text);
-    appViewModel.host = serverAddressController.text;
+        .setStringValue("host", serverAddressController.value.text);
+    appViewModel.host = serverAddressController.value.text;
+
+    serverAddressController.refresh();
+
     await homeViewModel.disconnectSocket();
     homeViewModel.connectToSocket();
   }
@@ -59,6 +80,6 @@ class SettingsViewModel extends BaseViewModel {
   }
 
   onServerAddressCancel() {
-    serverAddressController.text = appViewModel.host!;
+    serverAddressController.value.text = appViewModel.host!;
   }
 }

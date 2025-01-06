@@ -16,7 +16,7 @@ class SettingsView extends StatelessWidget {
         onViewModelReady: (model) => model.init(),
         onPageBuild: (context, viewModel) {
           return Scaffold(
-            extendBody: false,
+            resizeToAvoidBottomInset: false,
             body: Stack(
               children: [
                 Positioned(
@@ -60,9 +60,11 @@ class SettingsView extends StatelessWidget {
                           SettingsElement(
                               icon: const Icon(Icons.wifi),
                               title: "Bağlantı Türü",
-                              subtitle: viewModel.isLocal.value
-                                  ? const Text("Yerel Bağlantı")
-                                  : const Text("Uzak Bağlantı"),
+                              subtitle: Obx(() {
+                                return viewModel.isLocal.value
+                                    ? const Text("Yerel Bağlantı")
+                                    : const Text("Uzak Bağlantı");
+                              }),
                               child: Obx(() {
                                 return Row(
                                   spacing: 50,
@@ -85,14 +87,9 @@ class SettingsView extends StatelessWidget {
                               onCancel: viewModel.onServerAddressCancel,
                               child: MyTextField(
                                 labelText: "Sunucu Adresi",
-                                controller: viewModel.serverAddressController,
+                                controller:
+                                    viewModel.serverAddressController.value,
                               )),
-                          // ListTile(
-                          //   title: const Text("Theme"),
-                          //   subtitle: const Text("Set the theme"),
-                          //   trailing: const Icon(Icons.arrow_forward_ios),
-                          //   onTap: () {},
-                          // ),
                           ListTile(
                             leading: CircleAvatar(
                               backgroundColor: Colors.grey.shade200,
