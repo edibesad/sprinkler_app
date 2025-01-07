@@ -4,21 +4,34 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 class ConfigurationHumidity extends StatefulWidget {
   const ConfigurationHumidity({
     super.key,
-    this.minValue = 0,
-    this.maxValue = 100,
+    this.minimum = 0,
+    this.maximum = 100,
+    this.startValue = 30,
+    this.endValue = 70,
+    this.onChanged,
     required this.text,
   });
 
-  final double minValue;
-  final double maxValue;
+  final double minimum;
+  final double maximum;
+  final double startValue;
+  final double endValue;
+  final void Function(double lowerValue, double upperValue)? onChanged;
   final String text;
   @override
   State<ConfigurationHumidity> createState() => _ConfigurationHumidityState();
 }
 
 class _ConfigurationHumidityState extends State<ConfigurationHumidity> {
-  double startValue = 30;
-  double endValue = 70;
+  late double startValue;
+  late double endValue;
+
+  @override
+  void initState() {
+    super.initState();
+    startValue = widget.startValue;
+    endValue = widget.endValue;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +48,8 @@ class _ConfigurationHumidityState extends State<ConfigurationHumidity> {
                     child: SfRadialGauge(
                       axes: <RadialAxis>[
                         RadialAxis(
-                          minimum: widget.minValue,
-                          maximum: widget.maxValue,
+                          minimum: widget.minimum,
+                          maximum: widget.maximum,
                           startAngle: 180,
                           endAngle: 0,
                           showLabels: true,
@@ -57,11 +70,10 @@ class _ConfigurationHumidityState extends State<ConfigurationHumidity> {
                               value: startValue,
                               enableDragging: true,
                               onValueChanged: (value) {
-                                setState(() {
-                                  if (value < endValue) {
-                                    startValue = value;
-                                  }
-                                });
+                                if (value < endValue) {
+                                  setState(() => (startValue = value));
+                                  widget.onChanged?.call(startValue, endValue);
+                                }
                               },
                               color: Colors.blue,
                               markerHeight: 25,
@@ -72,11 +84,10 @@ class _ConfigurationHumidityState extends State<ConfigurationHumidity> {
                               value: endValue,
                               enableDragging: true,
                               onValueChanged: (value) {
-                                setState(() {
-                                  if (value > startValue) {
-                                    endValue = value;
-                                  }
-                                });
+                                if (value > startValue) {
+                                  setState(() => (endValue = value));
+                                  widget.onChanged?.call(startValue, endValue);
+                                }
                               },
                               color: Colors.blue,
                               markerHeight: 25,

@@ -59,4 +59,9 @@ class WebSocketService {
     _socket?.close();
     _socket = null;
   }
+
+  // Mesaj gönderme
+  void sendMessage(String message) {
+    _socket?.add(message);
+  }
 }

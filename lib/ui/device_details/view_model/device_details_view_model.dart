@@ -8,6 +8,8 @@ import 'package:sprinkler_app/core/app/model/incoming_data.dart';
 import 'package:sprinkler_app/core/base/model/base_view_model.dart';
 import 'package:sprinkler_app/core/services/web_socket_service.dart';
 
+import '../../device_configuration/view/device_configuration_view.dart';
+
 class DeviceDetailsViewModel extends BaseViewModel {
   late Rx<IncomingData> data;
   late StreamSubscription<String> subscription;
@@ -44,5 +46,9 @@ class DeviceDetailsViewModel extends BaseViewModel {
   void dispose() {
     subscription.cancel();
     super.dispose();
+  }
+
+  void goToConfiguration() {
+    Get.to(() => const DeviceConfigurationView(), arguments: data.value);
   }
 }

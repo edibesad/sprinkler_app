@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:sprinkler_app/core/base/model/base_view_model.dart';
 
 class AppViewModel extends BaseViewModel {
-  String host = "ws://127.0.0.1:65432/ws";
+  String host = "ws://172.16.0.26:65432";
   int port = 65432;
 
   Rx<ThemeMode> themeMode = ThemeMode.light.obs;

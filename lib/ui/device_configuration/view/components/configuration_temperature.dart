@@ -1,36 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class ConfigurationComponent extends StatefulWidget {
-  const ConfigurationComponent({
-    super.key,
-    this.maxValue = 50,
-    this.minValue = -20,
-    required this.text,
-  });
-
-  final double minValue;
-  final double maxValue;
+class ConfigurationTemperature extends StatefulWidget {
+  const ConfigurationTemperature(
+      {super.key,
+      this.minimum = 0,
+      this.maximum = 100,
+      this.initLowerValue,
+      this.initUpperValue,
+      this.onChanged,
+      this.text = "Sıcaklık"});
+  final double minimum;
+  final double maximum;
+  final double? initLowerValue;
+  final double? initUpperValue;
   final String text;
+  final Function(double lowerValue, double upperValue)? onChanged;
 
   @override
-  State<ConfigurationComponent> createState() => _ConfigurationComponentState();
+  State<ConfigurationTemperature> createState() =>
+      _ConfigurationTemperatureState();
 }
 
-class _ConfigurationComponentState extends State<ConfigurationComponent> {
+class _ConfigurationTemperatureState extends State<ConfigurationTemperature> {
   late double lowerValue;
   late double upperValue;
 
   @override
   void initState() {
     super.initState();
-    lowerValue = 0;
-    upperValue = 10;
+    lowerValue = widget.initLowerValue ?? widget.minimum;
+    upperValue = widget.initUpperValue ?? widget.maximum;
   }
 
   Color getTemperatureColor(double value) {
-    if (value <= widget.minValue + 10) return Colors.blue;
-    if (value >= widget.maxValue - 10) return Colors.red;
+    if (value <= widget.minimum + 10) return Colors.blue;
+    if (value >= widget.maximum - 10) return Colors.red;
+    return Colors.orange;
+  }
+
+  Color _getTemperatureColor(double value) {
+    if (value <= widget.minimum + 10) return Colors.blue;
+    if (value >= widget.maximum - 10) return Colors.red;
     return Colors.orange;
   }
 
@@ -53,15 +64,14 @@ class _ConfigurationComponentState extends State<ConfigurationComponent> {
                     ),
                   ),
                 ),
-
                 Align(
                   alignment: Alignment.center,
                   child: SizedBox(
                     height: constraints.maxHeight - 40,
                     child: SfLinearGauge(
                       orientation: LinearGaugeOrientation.vertical,
-                      minimum: widget.minValue,
-                      maximum: widget.maxValue,
+                      minimum: widget.minimum,
+                      maximum: widget.maximum,
                       interval: 10,
                       showLabels: true,
                       labelPosition: LinearLabelPosition.outside,
@@ -69,10 +79,11 @@ class _ConfigurationComponentState extends State<ConfigurationComponent> {
                       markerPointers: [
                         LinearShapePointer(
                           value: lowerValue,
-                          color: getTemperatureColor(lowerValue),
+                          color: _getTemperatureColor(lowerValue),
                           onChanged: (val) {
                             if (val < upperValue) {
-                              setState(() => lowerValue = val);
+                              setState(() => lowerValue = val.floorToDouble());
+                              widget.onChanged?.call(lowerValue, upperValue);
                             }
                           },
                           shapeType: LinearShapePointerType.circle,
@@ -82,10 +93,11 @@ class _ConfigurationComponentState extends State<ConfigurationComponent> {
                         ),
                         LinearShapePointer(
                           value: upperValue,
-                          color: getTemperatureColor(upperValue),
+                          color: _getTemperatureColor(upperValue),
                           onChanged: (val) {
                             if (val > lowerValue) {
-                              setState(() => upperValue = val);
+                              setState(() => upperValue = val.floorToDouble());
+                              widget.onChanged?.call(lowerValue, upperValue);
                             }
                           },
                           shapeType: LinearShapePointerType.circle,
@@ -98,26 +110,13 @@ class _ConfigurationComponentState extends State<ConfigurationComponent> {
                         LinearGaugeRange(
                           startValue: lowerValue,
                           endValue: upperValue,
-                          color: Colors.orange.withOpacity(0.3),
+                          color: Colors.grey,
                           position: LinearElementPosition.cross,
-                          // thickness: 40,
                         ),
                       ],
                     ),
                   ),
                 ),
-
-                // Align(
-                //   alignment: Alignment.bottomCenter,
-                //   child: Container(
-                //     width: 40,
-                //     height: 40,
-                //     decoration: BoxDecoration(
-                //       color: Colors.grey[200],
-                //       shape: BoxShape.circle,
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -125,7 +124,7 @@ class _ConfigurationComponentState extends State<ConfigurationComponent> {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Text(
-            '${widget.text}\n Seçili Aralık: ${lowerValue.toStringAsFixed(1)}°C - ${upperValue.toStringAsFixed(1)}°C',
+            '${widget.text}\n Seçili Aralık: ${lowerValue.toStringAsFixed(0)}°C - ${upperValue.toStringAsFixed(0)}°C',
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),

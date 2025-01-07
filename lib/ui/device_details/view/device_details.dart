@@ -15,12 +15,12 @@ class DeviceDetails extends StatelessWidget {
       },
       onPageBuild: (context, viewModel) => Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(
+          onPressed: viewModel.goToConfiguration,
+          backgroundColor: const Color.fromRGBO(16, 38, 148, 20),
+          child: const Icon(
             Icons.edit,
             color: Colors.white,
           ),
-          backgroundColor: const Color.fromRGBO(16, 38, 148, 20),
         ),
         body: OrientationBuilder(
             builder: (context, orientation) => Obx(() {
