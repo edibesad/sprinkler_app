@@ -30,21 +30,33 @@ class DeviceDetails extends StatelessWidget {
                         childAspectRatio:
                             orientation == Orientation.landscape ? 1.8 : 0.68),
                     children: [
-                      ThermometerWidget(
-                          text: "Sıcaklık (°C)",
-                          currentTemperature:
-                              viewModel.data.value.airTemp!.toDouble()),
-                      ThermometerWidget(
-                          text: "Toprak Sıcaklığı (°C)",
-                          currentTemperature:
-                              viewModel.data.value.dirtTemp!.toDouble()),
-                      HumidityWidget(
-                        value: viewModel.data.value.airHumidity!.toDouble(),
-                        text: "Hava Nem",
+                      Hero(
+                        tag: "${viewModel.data.value.id}1",
+                        child: ThermometerWidget(
+                            text: "Sıcaklık (°C)",
+                            currentTemperature:
+                                viewModel.data.value.airTemp!.toDouble()),
                       ),
-                      HumidityWidget(
-                        value: viewModel.data.value.dirtHumidity!.toDouble(),
-                        text: "Toprak Nem",
+                      Hero(
+                        tag: "${viewModel.data.value.id}2",
+                        child: ThermometerWidget(
+                            text: "Toprak Sıcaklığı (°C)",
+                            currentTemperature:
+                                viewModel.data.value.dirtTemp!.toDouble()),
+                      ),
+                      Hero(
+                        tag: "${viewModel.data.value.id}3",
+                        child: HumidityWidget(
+                          value: viewModel.data.value.airHumidity!.toDouble(),
+                          text: "Hava Nem",
+                        ),
+                      ),
+                      Hero(
+                        tag: "${viewModel.data.value.id}4",
+                        child: HumidityWidget(
+                          value: viewModel.data.value.dirtHumidity!.toDouble(),
+                          text: "Toprak Nem",
+                        ),
                       ),
                     ]
                         .map(

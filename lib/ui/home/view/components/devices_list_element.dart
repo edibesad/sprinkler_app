@@ -35,21 +35,30 @@ class DevicesListElement extends StatelessWidget {
                     disableGesture: true,
                     items: [
                       Hero(
-                        tag: 1,
+                        tag: "${data.id}1",
                         child: ThermometerWidget(
                             text: "Sıcaklık (°C)",
                             currentTemperature: data.airTemp!.toDouble()),
                       ),
-                      ThermometerWidget(
-                          text: "Toprak Sıcaklığı (°C)",
-                          currentTemperature: data.dirtTemp!.toDouble()),
-                      HumidityWidget(
-                        value: data.airHumidity!.toDouble(),
-                        text: "Hava Nem",
+                      Hero(
+                        tag: "${data.id}2",
+                        child: ThermometerWidget(
+                            text: "Toprak Sıcaklığı (°C)",
+                            currentTemperature: data.dirtTemp!.toDouble()),
                       ),
-                      HumidityWidget(
-                        value: data.dirtHumidity!.toDouble(),
-                        text: "Toprak Nem",
+                      Hero(
+                        tag: "${data.id}3",
+                        child: HumidityWidget(
+                          value: data.airHumidity!.toDouble(),
+                          text: "Hava Nem",
+                        ),
+                      ),
+                      Hero(
+                        tag: "${data.id}4",
+                        child: HumidityWidget(
+                          value: data.dirtHumidity!.toDouble(),
+                          text: "Toprak Nem",
+                        ),
                       ),
                     ],
                     options: CarouselOptions(
