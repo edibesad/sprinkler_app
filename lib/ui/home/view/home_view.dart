@@ -30,7 +30,7 @@ class HomeView extends StatelessWidget {
                       children: [
                         Text(viewModel.error.value!),
                         IconButton(
-                            onPressed: viewModel.subscribeToMessages,
+                            onPressed: viewModel.connectToSocket,
                             icon: const Icon(Icons.refresh))
                       ],
                     );
