@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sprinkler_app/core/base/view/base_view.dart';
+import 'package:sprinkler_app/core/extension/context_extension.dart';
 import 'package:sprinkler_app/ui/device_details/view_model/device_details_view_model.dart';
 import 'package:sprinkler_app/ui/home/view/components/humidity_widget.dart';
 import 'package:sprinkler_app/ui/home/view/components/thermometer_widget.dart';
@@ -22,51 +24,66 @@ class DeviceDetails extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        body: OrientationBuilder(
-            builder: (context, orientation) => Obx(() {
-                  return GridView(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio:
-                            orientation == Orientation.landscape ? 1.8 : 0.68),
-                    children: [
-                      Hero(
-                        tag: "${viewModel.data.value.id}1",
-                        child: ThermometerWidget(
-                            text: "Sıcaklık (°C)",
-                            currentTemperature:
-                                viewModel.data.value.airTemp!.toDouble()),
-                      ),
-                      Hero(
-                        tag: "${viewModel.data.value.id}2",
-                        child: ThermometerWidget(
-                            text: "Toprak Sıcaklığı (°C)",
-                            currentTemperature:
-                                viewModel.data.value.dirtTemp!.toDouble()),
-                      ),
-                      Hero(
-                        tag: "${viewModel.data.value.id}3",
-                        child: HumidityWidget(
-                          value: viewModel.data.value.airHumidity!.toDouble(),
-                          text: "Hava Nem",
+        body: SafeArea(
+          child: OrientationBuilder(
+              builder: (context, orientation) => Obx(() {
+                    return Column(
+                      children: [
+                        Text(
+                          viewModel.data.value.id.toString(),
+                          style: GoogleFonts.nunito(
+                              fontSize: context.highValue * 0.5,
+                              color: const Color.fromRGBO(16, 38, 148, 20)),
                         ),
-                      ),
-                      Hero(
-                        tag: "${viewModel.data.value.id}4",
-                        child: HumidityWidget(
-                          value: viewModel.data.value.dirtHumidity!.toDouble(),
-                          text: "Toprak Nem",
-                        ),
-                      ),
-                    ]
-                        .map(
-                          (e) => Card(
-                            child: e,
+                        Expanded(
+                          child: GridView(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio:
+                                        orientation == Orientation.landscape
+                                            ? 1.8
+                                            : 0.68),
+                            children: [
+                              ThermometerWidget(
+                                  text: "Sıcaklık (°C)",
+                                  currentTemperature:
+                                      viewModel.data.value.airTemp!.toDouble()),
+                              ThermometerWidget(
+                                  text: "Toprak Sıcaklığı (°C)",
+                                  currentTemperature: viewModel
+                                      .data.value.dirtTemp!
+                                      .toDouble()),
+                              HumidityWidget(
+                                value: viewModel.data.value.airHumidity!
+                                    .toDouble(),
+                                text: "Hava Nem",
+                              ),
+                              HumidityWidget(
+                                value: viewModel.data.value.dirtHumidity!
+                                    .toDouble(),
+                                text: "Toprak Nem",
+                              ),
+                              Center(
+                                  child: Text(
+                                "Kalan Süre \n${viewModel.hour.toString()} saat ${viewModel.minute.toString()} dakika",
+                                style: const TextStyle(
+                                    fontSize: 30, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              )),
+                            ]
+                                .map(
+                                  (e) => Card(
+                                    child: e,
+                                  ),
+                                )
+                                .toList(),
                           ),
-                        )
-                        .toList(),
-                  );
-                })),
+                        ),
+                      ],
+                    );
+                  })),
+        ),
       ),
       viewModel: DeviceDetailsViewModel(),
     );

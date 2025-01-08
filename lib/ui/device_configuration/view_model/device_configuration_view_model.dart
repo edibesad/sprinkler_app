@@ -16,6 +16,8 @@ class DeviceConfigurationViewModel extends BaseViewModel {
   double _maxAirHumidity = 100;
   double _minDirtHumidity = 0;
   double _maxDirtHumidity = 100;
+  int _hour = 0;
+  int _minute = 0;
 
   @override
   void init() {
@@ -120,6 +122,24 @@ class DeviceConfigurationViewModel extends BaseViewModel {
     }
     if (upperValue != null) {
       _maxDirtHumidity = upperValue;
+    }
+  }
+
+  void workCheckboxOnChanged(value) {
+    if (value) {
+      setWork(_hour, _minute);
+    } else {
+      setWork(null, null);
+    }
+  }
+
+  void setWork(int? hour, int? minute) {
+    if (hour == null || minute == null) {
+      incomingData.value.configurationWork = null;
+    } else {
+      incomingData.value.configurationWork = (hour * 3600) + (minute * 60);
+      _hour = hour;
+      _minute = minute;
     }
   }
 }

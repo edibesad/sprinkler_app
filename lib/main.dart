@@ -27,10 +27,9 @@ class MainApp extends StatelessWidget {
         return Obx(() {
           viewModel.themeMode.value;
           return GetMaterialApp(
-            theme: Themes.customTheme,
-            themeMode: viewModel.themeMode.value,
-            home: const HomeView(),
-          );
+              theme: Themes.customTheme,
+              themeMode: viewModel.themeMode.value,
+              home: const HomeView());
         });
       },
     );

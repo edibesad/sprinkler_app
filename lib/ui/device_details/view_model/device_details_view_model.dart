@@ -13,10 +13,12 @@ import '../../device_configuration/view/device_configuration_view.dart';
 class DeviceDetailsViewModel extends BaseViewModel {
   late Rx<IncomingData> data;
   late StreamSubscription<String> subscription;
-
+  int hour = 0;
+  int minute = 0;
   @override
   void init() {
     data = (Get.arguments as IncomingData).obs;
+    data.listen(listenData);
     subscription = WebSocketService.instance.getMessages.listen(listenMessages);
   }
 
@@ -40,6 +42,11 @@ class DeviceDetailsViewModel extends BaseViewModel {
         printError(info: "Hata Kodu LS Hata: $e");
       }
     }
+  }
+
+  void listenData(IncomingData data) {
+    hour = (data.work ?? 0) ~/ 3600;
+    minute = ((data.work ?? 0) % 3600) ~/ 60;
   }
 
   @override

@@ -82,7 +82,8 @@ class SettingsView extends StatelessWidget {
                           SettingsElement(
                               icon: const Icon(Icons.language),
                               title: "Sunucu Adresi",
-                              subtitle: Text(viewModel.appViewModel.host ?? ""),
+                              subtitle: Text(
+                                  viewModel.serverAddressController.value.text),
                               onSave: viewModel.saveServerAddress,
                               onCancel: viewModel.onServerAddressCancel,
                               child: MyTextField(

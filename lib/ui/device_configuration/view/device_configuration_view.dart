@@ -5,6 +5,7 @@ import 'package:sprinkler_app/core/components/my_button.dart';
 import 'package:sprinkler_app/ui/device_configuration/view/components/configuration_component.dart';
 import 'package:sprinkler_app/ui/device_configuration/view/components/configuration_humidity.dart';
 import 'package:sprinkler_app/ui/device_configuration/view/components/configuration_temperature.dart';
+import 'package:sprinkler_app/ui/device_configuration/view/components/work_configuration.dart';
 import 'package:sprinkler_app/ui/device_configuration/view_model/device_configuration_view_model.dart';
 
 class DeviceConfigurationView extends StatelessWidget {
@@ -30,6 +31,12 @@ class DeviceConfigurationView extends StatelessWidget {
                                             ? 1.8
                                             : 0.68),
                             children: [
+                              ConfigurationComponent(
+                                  onCheckboxChanged:
+                                      viewModel.workCheckboxOnChanged,
+                                  child: WorkConfiguration(
+                                    onChanged: viewModel.setWork,
+                                  )),
                               ConfigurationComponent(
                                 onCheckboxChanged:
                                     viewModel.airTempCheckboxOnChanged,

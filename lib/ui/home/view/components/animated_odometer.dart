@@ -8,13 +8,13 @@ class AnimatedOdometer extends StatefulWidget {
   final Duration duration;
 
   const AnimatedOdometer({
-    Key? key,
+    super.key,
     required this.value,
     this.digitHeight = 30,
     this.digitWidth = 20,
     this.numberOfDigits = 6,
     this.duration = const Duration(milliseconds: 800),
-  }) : super(key: key);
+  });
 
   @override
   _AnimatedOdometerState createState() => _AnimatedOdometerState();
