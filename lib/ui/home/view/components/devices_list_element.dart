@@ -8,6 +8,8 @@ import 'package:sprinkler_app/ui/device_details/view/device_details.dart';
 import 'package:sprinkler_app/ui/home/view/components/humidity_widget.dart';
 import 'package:sprinkler_app/ui/home/view/components/thermometer_widget.dart';
 
+import '../../../device_details/view/components/history.dart';
+
 class DevicesListElement extends StatelessWidget {
   const DevicesListElement(this.data, {super.key});
 
@@ -25,7 +27,7 @@ class DevicesListElement extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  data.id.toString(),
+                  data.sensorId.toString(),
                   style: GoogleFonts.nunito(
                       fontSize: context.highValue * 0.5,
                       color: const Color.fromRGBO(16, 38, 148, 20)),
@@ -34,19 +36,43 @@ class DevicesListElement extends StatelessWidget {
                   child: CarouselSlider(
                     disableGesture: true,
                     items: [
+                      Center(
+                        child: Text(
+                          "Kalan Süre \n${((data.work ?? 0) ~/ 3600).toString()} saat ${(((data.work ?? 0) % 3600) ~/ 60).toString()} dakika",
+                          style: const TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                       ThermometerWidget(
+                          mac: data.macId!,
+                          sensorId: data.sensorId!,
+                          yValue: YValue.temperature,
+                          showHistoryButton: false,
                           text: "Sıcaklık (°C)",
                           currentTemperature: data.airTemp!.toDouble()),
                       ThermometerWidget(
+                          mac: data.macId!,
+                          sensorId: data.sensorId!,
+                          yValue: YValue.dirtTemperature,
+                          showHistoryButton: false,
                           text: "Toprak Sıcaklığı (°C)",
                           currentTemperature: data.dirtTemp!.toDouble()),
                       HumidityWidget(
+                        mac: data.macId!,
+                        sensorId: data.sensorId!,
+                        yValue: YValue.humidity,
                         value: data.airHumidity!.toDouble(),
                         text: "Hava Nem",
+                        showHistoryButton: false,
                       ),
                       HumidityWidget(
                         value: data.dirtHumidity!.toDouble(),
+                        mac: data.macId!,
+                        sensorId: data.sensorId!,
+                        yValue: YValue.dirtHumidity,
                         text: "Toprak Nem",
+                        showHistoryButton: false,
                       ),
                     ],
                     options: CarouselOptions(

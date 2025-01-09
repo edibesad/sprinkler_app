@@ -7,7 +7,7 @@ part 'incoming_data.g.dart';
 @JsonSerializable(explicitToJson: true)
 class IncomingData extends BaseModel {
   int? id;
-  String? mac;
+  String? macId;
   int? dirtTemp;
   int? dirtHumidity;
   int? airHumidity;
@@ -16,7 +16,7 @@ class IncomingData extends BaseModel {
   int? work;
 
   int? configurationWork;
-
+  DateTime? createDate;
   int? minDirtHumidity;
   int? maxDirtHumidity;
   int? minDirtTemp;
@@ -25,10 +25,11 @@ class IncomingData extends BaseModel {
   int? maxAirHumidity;
   int? minAirTemp;
   int? maxAirTemp;
+  int? sensorId;
 
   IncomingData(
       {this.id,
-      this.mac,
+      this.macId,
       this.dirtTemp,
       this.dirtHumidity,
       this.airHumidity,
@@ -42,7 +43,9 @@ class IncomingData extends BaseModel {
       this.maxAirTemp,
       this.maxDirtTemp,
       this.minAirTemp,
-      this.minDirtTemp});
+      this.minDirtTemp,
+      this.sensorId,
+      this.createDate});
 
   factory IncomingData.fromJson(Map<String, dynamic> json) =>
       _$IncomingDataFromJson(json);

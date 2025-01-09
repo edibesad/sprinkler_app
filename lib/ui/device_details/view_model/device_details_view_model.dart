@@ -15,6 +15,9 @@ class DeviceDetailsViewModel extends BaseViewModel {
   late StreamSubscription<String> subscription;
   int hour = 0;
   int minute = 0;
+
+  late AnimationController animationController;
+
   @override
   void init() {
     data = (Get.arguments as IncomingData).obs;
@@ -37,6 +40,12 @@ class DeviceDetailsViewModel extends BaseViewModel {
       data.value = list.firstWhere(
         (element) => element.id == data.value.id,
       );
+      if (data.value.work != 0) {
+        animationController.repeat();
+      } else {
+        animationController.reset();
+        animationController.stop();
+      }
     } catch (e) {
       if (kDebugMode) {
         printError(info: "Hata Kodu LS Hata: $e");
@@ -57,5 +66,10 @@ class DeviceDetailsViewModel extends BaseViewModel {
 
   void goToConfiguration() {
     Get.to(() => const DeviceConfigurationView(), arguments: data.value);
+  }
+
+  void cancelWork() {
+    WebSocketService.instance
+        .sendMessage((data.value..configurationWork = 0).toJson().toString());
   }
 }

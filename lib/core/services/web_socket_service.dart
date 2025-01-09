@@ -21,7 +21,7 @@ class WebSocketService {
   Future<void> connectToSocket(String host) async {
     try {
       _socket = await WebSocket.connect(
-        host,
+        "$host:8080",
       );
 
       _socket!.listen(_onMessage, onDone: _onDone, onError: _onError);

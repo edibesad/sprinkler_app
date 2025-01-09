@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkler_app/core/app/view_model/app_view_model.dart';
-import 'package:sprinkler_app/core/constants/app/app_container.dart';
+import 'package:sprinkler_app/core/utils/constants/app/app_container.dart';
 import 'package:sprinkler_app/core/init/navigation/get_navigation_service.dart';
 
 import '../../init/navigation/inavigation_service.dart';

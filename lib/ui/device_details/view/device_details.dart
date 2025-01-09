@@ -3,9 +3,12 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sprinkler_app/core/base/view/base_view.dart';
 import 'package:sprinkler_app/core/extension/context_extension.dart';
+import 'package:sprinkler_app/ui/device_details/view/components/sprinkler_animation.dart';
 import 'package:sprinkler_app/ui/device_details/view_model/device_details_view_model.dart';
 import 'package:sprinkler_app/ui/home/view/components/humidity_widget.dart';
 import 'package:sprinkler_app/ui/home/view/components/thermometer_widget.dart';
+
+import 'components/history.dart';
 
 class DeviceDetails extends StatelessWidget {
   const DeviceDetails({super.key});
@@ -30,7 +33,7 @@ class DeviceDetails extends StatelessWidget {
                     return Column(
                       children: [
                         Text(
-                          viewModel.data.value.id.toString(),
+                          viewModel.data.value.sensorId.toString(),
                           style: GoogleFonts.nunito(
                               fontSize: context.highValue * 0.5,
                               color: const Color.fromRGBO(16, 38, 148, 20)),
@@ -45,39 +48,79 @@ class DeviceDetails extends StatelessWidget {
                                             ? 1.8
                                             : 0.68),
                             children: [
-                              ThermometerWidget(
-                                  text: "Sıcaklık (°C)",
-                                  currentTemperature:
-                                      viewModel.data.value.airTemp!.toDouble()),
-                              ThermometerWidget(
-                                  text: "Toprak Sıcaklığı (°C)",
-                                  currentTemperature: viewModel
-                                      .data.value.dirtTemp!
-                                      .toDouble()),
-                              HumidityWidget(
-                                value: viewModel.data.value.airHumidity!
-                                    .toDouble(),
-                                text: "Hava Nem",
+                              Card(
+                                child: Center(
+                                    child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  spacing: 20,
+                                  children: [
+                                    Text(
+                                      "Kalan Süre \n${viewModel.hour.toString()} saat ${viewModel.minute.toString()} dakika",
+                                      style: const TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    if (viewModel.data.value.work != 0)
+                                      TextButton(
+                                          style: TextButton.styleFrom(
+                                            foregroundColor: Colors.red,
+                                            textStyle: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          onPressed: viewModel.cancelWork,
+                                          child: const Text("Sulama İptal Et"))
+                                  ],
+                                )),
                               ),
-                              HumidityWidget(
-                                value: viewModel.data.value.dirtHumidity!
-                                    .toDouble(),
-                                text: "Toprak Nem",
+                              Card(
+                                  color: Colors.grey[200],
+                                  child:
+                                      SprinklerAnimation(viewModel: viewModel)),
+                              Card(
+                                color: Colors.grey[200],
+                                child: ThermometerWidget(
+                                    sensorId: viewModel.data.value.sensorId!,
+                                    yValue: YValue.temperature,
+                                    mac: viewModel.data.value.macId!,
+                                    text: "Sıcaklık (°C)",
+                                    currentTemperature: viewModel
+                                        .data.value.airTemp!
+                                        .toDouble()),
                               ),
-                              Center(
-                                  child: Text(
-                                "Kalan Süre \n${viewModel.hour.toString()} saat ${viewModel.minute.toString()} dakika",
-                                style: const TextStyle(
-                                    fontSize: 30, fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
-                              )),
-                            ]
-                                .map(
-                                  (e) => Card(
-                                    child: e,
-                                  ),
-                                )
-                                .toList(),
+                              Card(
+                                child: ThermometerWidget(
+                                    mac: viewModel.data.value.macId!,
+                                    sensorId: viewModel.data.value.sensorId!,
+                                    yValue: YValue.dirtTemperature,
+                                    text: "Toprak Sıcaklığı (°C)",
+                                    currentTemperature: viewModel
+                                        .data.value.dirtTemp!
+                                        .toDouble()),
+                              ),
+                              Card(
+                                child: HumidityWidget(
+                                  mac: viewModel.data.value.macId!,
+                                  sensorId: viewModel.data.value.sensorId!,
+                                  yValue: YValue.humidity,
+                                  value: viewModel.data.value.airHumidity!
+                                      .toDouble(),
+                                  text: "Hava Nem",
+                                ),
+                              ),
+                              Card(
+                                color: Colors.grey[200],
+                                child: HumidityWidget(
+                                  mac: viewModel.data.value.macId!,
+                                  sensorId: viewModel.data.value.sensorId!,
+                                  yValue: YValue.dirtHumidity,
+                                  value: viewModel.data.value.dirtHumidity!
+                                      .toDouble(),
+                                  text: "Toprak Nem",
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],

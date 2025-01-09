@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 
 import 'package:sprinkler_app/core/app/view_model/app_view_model.dart';
 import 'package:sprinkler_app/core/base/view/base_view.dart';
-import 'package:sprinkler_app/core/constants/app/app_container.dart';
-import 'package:sprinkler_app/core/theme/themes.dart';
+import 'package:sprinkler_app/core/utils/constants/app/app_container.dart';
+import 'package:sprinkler_app/core/utils/theme/themes.dart';
 
 import 'ui/home/view/home_view.dart';
 
