@@ -16,7 +16,7 @@ class HomeView extends StatelessWidget {
       },
       onPageBuild: (context, viewModel) => Scaffold(
         floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color.fromRGBO(16, 38, 148, 20),
+          backgroundColor: const Color.fromRGBO(16, 38, 148, 1),
           onPressed: viewModel.toSettings,
           child: const Icon(
             Icons.settings,

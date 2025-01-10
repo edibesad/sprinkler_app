@@ -109,7 +109,7 @@ class DeviceConfigurationView extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: context.width * .2,
+                    width: context.width * .3,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: MyButton(

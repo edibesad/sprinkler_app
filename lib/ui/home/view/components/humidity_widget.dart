@@ -41,32 +41,33 @@ class _HumidityWidgetState extends State<HumidityWidget> {
                     _animateForward = forward;
                     _animateReverse = reverse;
                   },
-                  firstChild: buildRadialGauge(),
+                  firstChild: buildRadialGauge(constraints),
                   secondChild: History(
                       minimum: 0,
                       maximum: 100,
                       mac: widget.mac,
                       sensorId: widget.sensorId,
                       yValue: widget.yValue))),
-          Align(
-              alignment: Alignment.topRight,
-              child: IconButton(
-                  onPressed: () {
-                    if (_flipped) {
-                      _animateReverse();
-                      _flipped = false;
-                    } else {
-                      _animateForward();
-                      _flipped = true;
-                    }
-                  },
-                  icon: const Icon(Icons.history))),
+          if (widget.showHistoryButton)
+            Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                    onPressed: () {
+                      if (_flipped) {
+                        _animateReverse();
+                        _flipped = false;
+                      } else {
+                        _animateForward();
+                        _flipped = true;
+                      }
+                    },
+                    icon: const Icon(Icons.history))),
         ],
       );
     });
   }
 
-  Column buildRadialGauge() {
+  Column buildRadialGauge(BoxConstraints constraints) {
     return Column(
       children: [
         Expanded(
@@ -78,8 +79,8 @@ class _HumidityWidgetState extends State<HumidityWidget> {
                     angle: 90,
                     widget: AnimatedOdometer(
                       value: widget.value.toInt(),
-                      digitWidth: 20,
-                      digitHeight: 30,
+                      digitWidth: constraints.maxWidth * .04,
+                      digitHeight: constraints.maxHeight * .07,
                       numberOfDigits: 3,
                     ))
               ],

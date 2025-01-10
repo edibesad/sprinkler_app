@@ -21,7 +21,7 @@ class DeviceDetails extends StatelessWidget {
       onPageBuild: (context, viewModel) => Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: viewModel.goToConfiguration,
-          backgroundColor: const Color.fromRGBO(16, 38, 148, 20),
+          backgroundColor: const Color.fromRGBO(16, 38, 148, 1),
           child: const Icon(
             Icons.edit,
             color: Colors.white,
@@ -36,7 +36,7 @@ class DeviceDetails extends StatelessWidget {
                           viewModel.data.value.sensorId.toString(),
                           style: GoogleFonts.nunito(
                               fontSize: context.highValue * 0.5,
-                              color: const Color.fromRGBO(16, 38, 148, 20)),
+                              color: const Color.fromRGBO(16, 38, 148, 1)),
                         ),
                         Expanded(
                           child: GridView(
@@ -81,6 +81,8 @@ class DeviceDetails extends StatelessWidget {
                               Card(
                                 color: Colors.grey[200],
                                 child: ThermometerWidget(
+                                    showHistoryButton:
+                                        !viewModel.appViewModel.isLocal,
                                     sensorId: viewModel.data.value.sensorId!,
                                     yValue: YValue.temperature,
                                     mac: viewModel.data.value.macId!,
@@ -91,6 +93,8 @@ class DeviceDetails extends StatelessWidget {
                               ),
                               Card(
                                 child: ThermometerWidget(
+                                    showHistoryButton:
+                                        !viewModel.appViewModel.isLocal,
                                     mac: viewModel.data.value.macId!,
                                     sensorId: viewModel.data.value.sensorId!,
                                     yValue: YValue.dirtTemperature,
@@ -101,6 +105,8 @@ class DeviceDetails extends StatelessWidget {
                               ),
                               Card(
                                 child: HumidityWidget(
+                                  showHistoryButton:
+                                      !viewModel.appViewModel.isLocal,
                                   mac: viewModel.data.value.macId!,
                                   sensorId: viewModel.data.value.sensorId!,
                                   yValue: YValue.humidity,
@@ -112,6 +118,8 @@ class DeviceDetails extends StatelessWidget {
                               Card(
                                 color: Colors.grey[200],
                                 child: HumidityWidget(
+                                  showHistoryButton:
+                                      !viewModel.appViewModel.isLocal,
                                   mac: viewModel.data.value.macId!,
                                   sensorId: viewModel.data.value.sensorId!,
                                   yValue: YValue.dirtHumidity,

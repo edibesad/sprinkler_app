@@ -30,7 +30,7 @@ class DevicesListElement extends StatelessWidget {
                   data.sensorId.toString(),
                   style: GoogleFonts.nunito(
                       fontSize: context.highValue * 0.5,
-                      color: const Color.fromRGBO(16, 38, 148, 20)),
+                      color: const Color.fromRGBO(16, 38, 148, 1)),
                 ),
                 Expanded(
                   child: CarouselSlider(

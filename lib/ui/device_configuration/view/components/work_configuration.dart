@@ -36,7 +36,7 @@ class _WorkConfigurationState extends State<WorkConfiguration> {
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
-                                color: const Color.fromRGBO(16, 38, 148, 20)),
+                                color: const Color.fromRGBO(16, 38, 148, 1)),
                             child: Center(
                               child: Icon(
                                 color: Colors.white,
@@ -75,7 +75,7 @@ class _WorkConfigurationState extends State<WorkConfiguration> {
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
-                                color: const Color.fromRGBO(16, 38, 148, 20)),
+                                color: const Color.fromRGBO(16, 38, 148, 1)),
                             child: Center(
                               child: Icon(
                                 Icons.remove,
@@ -108,7 +108,7 @@ class _WorkConfigurationState extends State<WorkConfiguration> {
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
-                                color: const Color.fromRGBO(16, 38, 148, 20)),
+                                color: const Color.fromRGBO(16, 38, 148, 1)),
                             child: Center(
                               child: Icon(
                                 color: Colors.white,
@@ -147,7 +147,7 @@ class _WorkConfigurationState extends State<WorkConfiguration> {
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
-                                color: const Color.fromRGBO(16, 38, 148, 20)),
+                                color: const Color.fromRGBO(16, 38, 148, 1)),
                             child: Center(
                               child: Icon(
                                 color: Colors.white,

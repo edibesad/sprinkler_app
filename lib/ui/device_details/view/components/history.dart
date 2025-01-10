@@ -121,6 +121,7 @@ class _HistoryState extends State<History> {
           dateFormat: DateFormat('yyyy-MM-dd HH:mm'),
         ),
         primaryYAxis: NumericAxis(
+          interval: 5,
           minimum: widget.minimum.toDouble(),
           maximum: widget.maximum.toDouble(),
         ),

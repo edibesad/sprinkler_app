@@ -5,13 +5,14 @@ class MyButton extends StatefulWidget {
   final IconData icon1;
   final IconData icon2;
   final VoidCallback onPressed;
-
+  final Color? foregroundColor;
   const MyButton({
     super.key,
     required this.text,
     required this.icon1,
     required this.icon2,
     required this.onPressed,
+    this.foregroundColor,
   });
 
   @override
@@ -35,7 +36,7 @@ class _MyButtonState extends State<MyButton> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(),
+      style: ElevatedButton.styleFrom(foregroundColor: widget.foregroundColor),
       onPressed: _handlePress,
       child: Padding(
         padding: const EdgeInsets.all(12),
